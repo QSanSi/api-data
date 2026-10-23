@@ -43,7 +43,7 @@ jobs:
         env:
             SOLARIS_API_VERSION: v1
             SOLARIS_API_URL: https://api.seerapi.com
-            SOLARIS_DATA_SOURCE: https://github.com/Murmansk-Seer/config-sources.git
+            SOLARIS_DATA_SOURCE: https://github.com/QSanSi/config-sources.git
             SOLARIS_PATCH_SOURCE: https://github.com/Murmansk-Seer/patch-sources.git
             BASE_OUTPUT_DIR: data
             HAS_BLOB_CONFIG: ${{ secrets.BLOB_TOKEN != '' && secrets.BLOB_PROJECT_ID != '' && secrets.BLOB_STORE_NAME != '' }}
@@ -220,14 +220,14 @@ jobs:
               run: |
                   set -euo pipefail
                   if [ -z "${GH_TOKEN:-}" ]; then
-                      echo "::error::SEERAPI_DISPATCH_TOKEN is required to notify Murmansk-Seer/seerapi after publishing api-data."
+                      echo "::error::SEERAPI_DISPATCH_TOKEN is required to notify QSanSi/seerapi after publishing api-data."
                       exit 1
                   fi
                   if ! [[ "${DB_SHA}" =~ ^[0-9a-f]{64}$ ]]; then
                       echo "::error::Generated api-data SHA256 is invalid: ${DB_SHA}"
                       exit 1
                   fi
-                  gh api --method POST repos/Murmansk-Seer/seerapi/dispatches \
+                  gh api --method POST repos/QSanSi/seerapi/dispatches \
                       -f event_type=api-data-published \
                       -f "client_payload[sha256]=${DB_SHA}" \
                       -f "client_payload[source_commit]=${SOURCE_COMMIT}"
